@@ -119,7 +119,8 @@ any extra information.
     <tbody>
         <tr>
             <th><code>type</code></th>
-            <td colspan="2"><code>"org.raisingthefloor.morphic.client"</code></td>
+            <td><code>string</code></td>
+            <td><code>"org.raisingthefloor.morphic.client"</code></td>
             <td>Required</td>
         </tr>
     </tbody>
@@ -141,7 +142,8 @@ the properties below:
     <tbody>
         <tr>
             <th><code>type</code></th>
-            <td colspan="2"><code>"com.microsoft.windows.registry"</code></td>
+            <td><code>string</code></td>
+            <td><code>"com.microsoft.windows.registry"</code></td>
             <td>Required</td>
         </tr>
         <tr>
@@ -186,7 +188,8 @@ Windows INI file handlers adjust values within `.ini` files.
     <tbody>
         <tr>
             <th><code>type</code></th>
-            <td colspan="2"><code>"com.microsoft.windows.ini"</code></td>
+            <td><code>string</code></td>
+            <td><code>"com.microsoft.windows.ini"</code></td>
             <td>Required</td>
         </tr>
         <tr>
@@ -204,7 +207,7 @@ Windows INI file handlers adjust values within `.ini` files.
         <tr>
             <th><code>key</code></th>
             <td><code>string</code></td>
-            <td>The key within the `section`</td>
+            <td>The key within the section</td>
             <td>Required</td>
         </tr>
     </tbody>
