@@ -56,7 +56,7 @@ solutions:
           type: com.microsoft.windows.registry
           key_name: HKEY_CURRENT_USER\Software\Microsoft\ScreenMagnifier
           value_name: Invert
-          value_type: REG_DWORD
+          value_type: dword
   -
     # Settings related to JAWS
     id: com.freedomscientific.jaws

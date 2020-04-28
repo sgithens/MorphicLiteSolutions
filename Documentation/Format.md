@@ -169,9 +169,9 @@ the properties below:
 
 ### RegistryType
 
-* `REG_SZ` - String
-* `REG_DWORD` - 32 bit integer
-* `REG_QWORD` - 64 bit ingeger
+* `string` - String
+* `dword` - 32 bit integer
+* `qword` - 64 bit ingeger
 
 Windows INI File Handler
 -----
