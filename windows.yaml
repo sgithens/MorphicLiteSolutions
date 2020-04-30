@@ -43,10 +43,11 @@ solutions:
     settings:
       -
         # Turns the magnifier on or off
-        name: "on"
+        name: enabled
         type: boolean
         handler:
-          type: org.raisingthefloor.morphic.client
+          type: com.microsoft.windows.system
+          subkey: SystemSettings_Accessibility_Magnifier_IsEnabled
       -
         # The magnification level of the magnifier
         # 1 = Docked
@@ -160,6 +161,13 @@ solutions:
           key_name: HKEY_CURRENT_USER\Software\Microsoft\ScreenMagnifier
           value_name: FadeToMagIcon
           value_type: dword
+  -
+    id: com.microsoft.windows.narrator
+    settings:
+      -
+        name: enabled
+        handler:
+          type: org.raisingthefloor.morphic.client
   -
     # Settings related to JAWS
     id: com.freedomscientific.jaws

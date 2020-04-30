@@ -173,6 +173,36 @@ the properties below:
 * `dword` - 32 bit integer
 * `qword` - 64 bit ingeger
 
+Windows System Setting Handler
+-----
+
+Windows system setting handlers call built in windows function to adjust
+settings after inspecting a special registry key for information about
+how to find the function for each setting.
+
+<table>
+    <thead>
+        <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th colspan="2">Description</th>
+        </tr>
+    <tbody>
+        <tr>
+            <th><code>type</code></th>
+            <td><code>string</code></td>
+            <td><code>"com.microsoft.windows.system"</code></td>
+            <td>Required</td>
+        </tr>
+        <tr>
+            <th><code>subkey</code></th>
+            <td><code>string</code></td>
+            <td>The subkey under HLM\SW\MS\SystemSettings\SettingId</td>
+            <td>Required</td>
+        </tr>
+    </tbody>
+</table>
+
 Windows INI File Handler
 -----
 
