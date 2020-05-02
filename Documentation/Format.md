@@ -80,10 +80,22 @@ Each setting representns a specific option that affects how a solution behaves.
             <td>Required</td>
         </tr>
         <tr>
+            <th><code>default</code></th>
+            <td><code>any</code></td>
+            <td>The default value for this setting</td>
+            <td>Required</td>
+        </tr>
+        <tr>
             <th><code>handler</code></th>
             <td><code>Handler</code></td>
             <td>Details of how to read and write the setting</td>
             <td>Required</td>
+        </tr>
+        <tr>
+            <th><code>finalizer</code></th>
+            <td><code>Finalizer</code></td>
+            <td>Extra operation that needs to run so the changed setting is seen</td>
+            <td>Optional</td>
         </tr>
     </tbody>
 </table>
@@ -167,7 +179,7 @@ the properties below:
     </tbody>
 </table>
 
-### RegistryType
+### RegistryType: string
 
 * `string` - String
 * `dword` - 32 bit integer
@@ -195,7 +207,7 @@ how to find the function for each setting.
             <td>Required</td>
         </tr>
         <tr>
-            <th><code>subkey</code></th>
+            <th><code>setting_id</code></th>
             <td><code>string</code></td>
             <td>The subkey under HLM\SW\MS\SystemSettings\SettingId</td>
             <td>Required</td>
@@ -251,3 +263,43 @@ the `$(VARNAME)` syntax.
 The following variables are supported:
 
 * `APPDATA` - The user's application data root folder
+
+
+Finalizers
+=======
+
+A finalizer must be one of the following concrete finalizers
+
+System Parameters Info Finalizer
+-----
+
+System Parameteres Info finalizers call the `SystemParameteresInfoW` function
+on windows, which can be used to refresh certain services.
+
+<table>
+    <thead>
+        <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th colspan="2">Description</th>
+        </tr>
+    <tbody>
+        <tr>
+            <th><code>type</code></th>
+            <td><code>string</code></td>
+            <td><code>"com.microsoft.windows.systemParametersInfo"</code></td>
+            <td>Required</td>
+        </tr>
+        <tr>
+            <th><code>action</code></th>
+            <td><code>SystemParameterAction</code></td>
+            <td>The SPI action to execute</td>
+            <td>Required</td>
+        </tr>
+    </tbody>
+</table>
+
+
+### SystemParameterAction: string
+
+* `setcursors` - Refresh the system cursors

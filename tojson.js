@@ -30,12 +30,30 @@ if (!input){
     process.exit(-1);
 }
 
+var HandlerTypes = {
+    client: "org.raisingthefloor.morphic.client"
+};
+
+function addInfoToClientHandlers(solutions){
+    for (var solutionIndex = 0, l = solutions.length; solutionIndex < l; ++solutionIndex){
+        var solution = solutions[solutionIndex];
+        for (var settingIndex = 0, l = solution.settings.length; settingIndex < l; ++settingIndex){
+            var setting = solution.settings[settingIndex];
+            if (setting.handler.type == HandlerTypes.client){
+                setting.handler.solution = solution.id;
+                setting.handler.preference = setting.name;
+            }
+        }
+    }
+}
+
 fs.readFile(input, 'utf-8', function(err, contents){
     if (err){
         console.error(err);
         return;
     }
     var root = yaml.parse(contents);
+    addInfoToClientHandlers(root.solutions);
     process.stdout.write(JSON.stringify(root.solutions, null, 2));
     process.stdout.write("\n");
 });
