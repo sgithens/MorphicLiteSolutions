@@ -35,9 +35,9 @@ var HandlerTypes = {
 };
 
 function addInfoToClientHandlers(solutions){
-    for (var solutionIndex = 0, l = solutions.length; solutionIndex < l; ++solutionIndex){
+    for (var solutionIndex = 0, solutionCount = solutions.length; solutionIndex < solutionCount; ++solutionIndex){
         var solution = solutions[solutionIndex];
-        for (var settingIndex = 0, l = solution.settings.length; settingIndex < l; ++settingIndex){
+        for (var settingIndex = 0, settingCount = solution.settings.length; settingIndex < settingCount; ++settingIndex){
             var setting = solution.settings[settingIndex];
             if (setting.handler.type == HandlerTypes.client){
                 setting.handler.solution = solution.id;

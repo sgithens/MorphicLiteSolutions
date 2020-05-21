@@ -1,0 +1,709 @@
+# Copyright 2020 Raising the Floor - International
+#
+# Licensed under the New BSD license. You may not use this file except in
+# compliance with this License.
+#
+# You may obtain a copy of the License at
+# https://github.com/GPII/universal/blob/master/LICENSE.txt
+#
+# The R&D leading to these results received funding from the:
+# * Rehabilitation Services Administration, US Dept. of Education under
+#   grant H421A150006 (APCP)
+# * National Institute on Disability, Independent Living, and
+#   Rehabilitation Research (NIDILRR)
+# * Administration for Independent Living & Dept. of Education under grants
+#   H133E080022 (RERC-IT) and H133E130028/90RE5003-01-00 (UIITA-RERC)
+# * European Union's Seventh Framework Programme (FP7/2007-2013) grant
+#   agreement nos. 289016 (Cloud4all) and 610510 (Prosperity4All)
+# * William and Flora Hewlett Foundation
+# * Ontario Ministry of Research and Innovation
+# * Canadian Foundation for Innovation
+# * Adobe Foundation
+# * Consumer Electronics Association Foundation
+
+files:
+  # Configuration files used by JAWS 2019
+  - &DEFAULT $(APPDATA)\Freedom Scientific\JAWS\2019\Settings\enu\DEFAULT.JCF
+  - &GPII $(APPDATA)\Freedom Scientific\JAWS\2019\Settings\VoiceProfiles\GPII.VPF
+
+solutions:
+  -
+    id: com.freedomscientific.jaws
+    settings:
+      -
+        # Whether to have JAWS display a dialog when new podcasts from Freedom Scientific are available
+        name: podcast-notifications
+        type: boolean
+        default: true
+        handler:
+          type: com.microsoft.windows.ini
+          filename: *DEFAULT
+          section: FSCasts
+          key: EnableNotifications
+  -
+    # Settings related to JAWS 2019
+    id: com.freedomscientific.jaws.braille
+    settings:
+      -
+        # Whether to display the braille cursor as all dots raised
+        # instead of showing it using only dots seven and eight
+        name: cursor.all-dots
+        type: boolean
+        default: false
+        handler:
+          type: com.microsoft.windows.ini
+          filename: *DEFAULT
+          section: Braille
+          key: AllDotsBrailleCursor
+      -
+        # Whether to automatically route the Braille display to the active cursor
+        # whenever the active cursor moves or a key on the keyboard is pressed
+        name: cursor.auto-rotate
+        type: boolean
+        default: false
+        handler:
+          type: com.microsoft.windows.ini
+          filename: *DEFAULT
+          section: Braille
+          key: BrailleAutoRouteToCursor
+      -
+        # Whether to move the active cursor when the Braille cursor moves
+        name: cursor.move-active
+        type: boolean
+        default: false
+        handler:
+          type: com.microsoft.windows.ini
+          filename: *DEFAULT
+          section: Braille
+          key: BrailleMoveActiveCursor
+      -
+        # Speed, in milliseconds, at which the cursor on the braille display should blink
+        name: cursor.blink-rate-ms
+        type: integer
+        default: 500
+        handler:
+          type: com.microsoft.windows.ini
+          filename: *DEFAULT
+          section: Braille
+          key: BrailleCursorBlinkRate
+      -
+        # When in Attribute Mode and characters have multiple attributes,
+        # determines how long each attribute should be shown for in milliseconds
+        name: attribute-rotation-delay-ms
+        type: integer
+        default: 1000
+        handler:
+          type: com.microsoft.windows.ini
+          filename: *DEFAULT
+          section: Braille
+          key: AttributeRotationDelay
+      -
+        # 0 - off
+        # 1 - move display minimally to include whole word containing cursor
+        # 2 - match user pan
+        # 3 - move display to show whole word at cursor nearest the middle of the display area
+        # 4 - maximize text after cursor
+        # 5 - maximize text before cursor
+        # 6 - autopan to default structured segment
+        # 255 - Smart Autopan, autopan using the best algorithm for the current situation
+        name: autopan.mode
+        type: integer
+        default: 255
+        handler:
+          type: com.microsoft.windows.ini
+          filename: *DEFAULT
+          section: Braille
+          key: AutoPanMode
+      -
+        # Whether to automatically detect bluetooth displays
+        name: auto-detect-bluetooth
+        type: boolean
+        default: false
+        handler:
+          type: com.microsoft.windows.ini
+          filename: *DEFAULT
+          section: Braille
+          key: BrailleAutoDetectBluetooth
+      -
+        # Whether to Interrupt speech if a keystroke in the Braille display is pressed
+        name: key-interrupt-speech
+        type: boolean
+        default: true
+        handler:
+          type: com.microsoft.windows.ini
+          filename: *DEFAULT
+          section: Braille
+          key: BrailleKeyInterruptSpeech
+      -
+        # Whether or not to show Flash Messages on a braille display
+        name: flash.enabled
+        type: boolean
+        default: true
+        handler:
+          type: com.microsoft.windows.ini
+          filename: *DEFAULT
+          section: Braille
+          key: BrailleMessages
+      -
+        # If a display has no Status Cells, whether or not to prepend the
+        # Message Prefix to the Flash Message
+        name: flash.prefixes
+        type: boolean
+        default: true
+        handler:
+          type: com.microsoft.windows.ini
+          filename: *DEFAULT
+          section: Braille
+          key: MessagePrefixes
+      -
+        # Sets braille verbosity for Flash messages
+        #
+        # 0 - Beginner
+        # 1 - Intermediate
+        # 2 - Advanced
+        name: flash.verbosity
+        type: integer
+        # FIXME: missing default
+        handler:
+          type: com.microsoft.windows.ini
+          filename: *DEFAULT
+          section: Braille
+          key: BrailleVerbosity
+      -
+        # The text to show in the status area of the display when a
+        # Flash message is being shown if the display has no status cells,
+        # the text will be prepended to the Flash message
+        name: flash.status
+        type: string
+        default: msg
+        handler:
+          type: com.microsoft.windows.ini
+          filename: *DEFAULT
+          section: Braille
+          key: MessageStatusText
+      -
+        # When a Flash message is sent to the display via a script,
+        # how long in milliseconds should it be shown if not specified by thescript
+        name: flash.timeout-ms
+        type: integer
+        default: 5000
+        handler:
+          type: com.microsoft.windows.ini
+          filename: *DEFAULT
+          section: Braille
+          key: MessageTime
+      -
+        # Use this option to control the format of the information sent to the
+        # braille display. When Line mode is selected, JAWS sends the line of
+        # text at the current cursor position to the braille display.
+        #
+        # When Structured mode is selected, JAWS sends information to the
+        # display that is relevant to the current cursor position.
+        # 
+        # The information sent includes things such as control type,
+        # dialog name, or number of items in a list.
+        #
+        # When Speech Output mode is selected, JAWS sends the same text to the
+        # display that it sends to the synthesizer.
+        # 
+        # 0 - Line
+        # 1 - Structured
+        # 2 - Speech Output
+        # 3 - Attribute Indicators
+        name: mode
+        type: integer
+        default: 1
+        handler:
+          type: com.microsoft.windows.ini
+          filename: *DEFAULT
+          section: Braille
+          key: BrailleMode
+      -
+        # Whether to turn off the braille driver,
+        # typically used to disable braille for a specific application
+        name: sleep
+        type: boolean
+        default: false
+        handler:
+          type: com.microsoft.windows.ini
+          filename: *DEFAULT
+          section: Braille
+          key: BrailleSleepMode
+      -
+        # Enable contracted braille to be entered on the braille display's keyboard
+        name: input.contracted
+        type: boolean
+        default: false
+        handler:
+          type: com.microsoft.windows.ini
+          filename: *DEFAULT
+          section: Braille
+          key: ContractedBrailleInput
+      -
+        # The number of braille dots (six or eight) to use
+        #
+        # false - 6 dot
+        # true - 8 dot
+        name: eight-dot
+        type: boolean
+        default: true
+        handler:
+          type: com.microsoft.windows.ini
+          filename: *DEFAULT
+          section: Braille
+          key: EightDotBraille
+      -
+        # Whether or not to filter certain control characters
+        # (currently newlines, linefeeds and tabs)
+        name: filter-control-characters
+        type: boolean
+        default: true
+        handler:
+          type: com.microsoft.windows.ini
+          filename: *DEFAULT
+          section: Braille
+          key: FilterControlCharacters
+      -
+        # Whether to treat all bullets the same
+        name: generalize-bullets
+        type: boolean
+        default: false
+        handler:
+          type: com.microsoft.windows.ini
+          filename: *DEFAULT
+          section: Braille
+          key: GeneralizeBullets
+      -
+        # When Grade 2 is on, whether or not to show capital indicators
+        name: grade2.supress-captial-signs
+        type: boolean
+        default: false
+        handler:
+          type: com.microsoft.windows.ini
+          filename: *DEFAULT
+          section: Braille
+          key: Grade2SuppressCapitalSigns
+      -
+        # Whether or not panning buttons are reversed
+        name: reverse-panning-buttons
+        type: boolean
+        default: false
+        handler:
+          type: com.microsoft.windows.ini
+          filename: *DEFAULT
+          section: Braille
+          key: ReversePanningButtons
+      -
+        # Whether to reverse the order of the structured data to show the
+        # focused control's info first, followed by its grouping information,
+        # and then the dialog box information.
+        #
+        # By default, items are read in the opposite order.
+        name: reverse-structured-data
+        type: boolean
+        default: true
+        handler:
+          type: com.microsoft.windows.ini
+          filename: *DEFAULT
+          section: Braille
+          key: StructuredModeReverseOrder
+      -
+        # How many cells to use for status information if the display defines none of its own
+        name: status-cell-count
+        type: integer
+        default: 4
+        handler:
+          type: com.microsoft.windows.ini
+          filename: *DEFAULT
+          section: Braille
+          key: UseHowManyStatusCells
+      -
+        # Whether to use the screen model when providing field prompts and text
+        # in Braille with rich edits
+        name: rich-edits.use-screen-model
+        type: boolean
+        default: true
+        handler:
+          type: com.microsoft.windows.ini
+          filename: *DEFAULT
+          section: Braille
+          key: UseScreenModelForBrailleInRichEdits
+      -
+        # Whether or not to allow words to be split in order to maximize the
+        # use of the braille display.
+        #
+        # Ignored if panning is set to fixed increment.
+        name: word-wrap
+        type: boolean
+        default: true
+        handler:
+          type: com.microsoft.windows.ini
+          filename: *DEFAULT
+          section: Braille
+          key: WordWrap
+  -
+    id: com.freedomscientific.jaws.html
+    settings:
+      -
+        # Read the title attribute of abbreviations instead of the on screen text
+        name: title.abbreviations
+        type: boolean
+        default: false
+        handler:
+          type: com.microsoft.windows.ini
+          filename: *DEFAULT
+          section: HTML
+          key: Abbreviations
+      -
+        # Read the title acronym of abbreviations instead of the on screen text
+        name: title.acronyms
+        type: boolean
+        default: false
+        handler:
+          type: com.microsoft.windows.ini
+          filename: *DEFAULT
+          section: HTML
+          key: Acronyms
+      -
+        # Whether or not to expand abbreviations (using the abbr tag)
+        name: expand.abbreviations
+        type: boolean
+        default: false
+        handler:
+          type: com.microsoft.windows.ini
+          filename: *DEFAULT
+          section: HTML
+          key: ExpandAbbreviations
+      -
+        # Whether or not to expand acronyms (using the acronym tag)
+        name: expand.acronyms
+        type: boolean
+        default: false
+        handler:
+          type: com.microsoft.windows.ini
+          filename: *DEFAULT
+          section: HTML
+          key: ExpandAcronyms
+      -
+        # Whether to announce HTML element access keys when reading a web page
+        name: announce.access-keys
+        type: boolean
+        default: true
+        handler:
+          type: com.microsoft.windows.ini
+          filename: *DEFAULT
+          section: HTML
+          key: AccessKeys
+      -
+        # Whether to indicate HTML block quotations
+        name: announce.blockquote
+        type: boolean
+        default: true
+        handler:
+          type: com.microsoft.windows.ini
+          filename: *DEFAULT
+          section: HTML
+          key: BlockQuoteIndication
+      -
+        # Whether or not to support embedded ActiveX controls such as Macromedia Flash Movies.
+        #
+        # If enabled, only objects defined in JActiveX.ini are affected by this setting
+        name: activex
+        type: boolean
+        default: true
+        handler:
+          type: com.microsoft.windows.ini
+          filename: *DEFAULT
+          section: HTML
+          key: EmbeddedActiveXSupport
+      -
+        # Whether to skip (not announce) consecutive duplicate links
+        name: filter.duplicate-links
+        type: boolean
+        default: true
+        handler:
+          type: com.microsoft.windows.ini
+          filename: *DEFAULT
+          section: HTML
+          key: FilterConsecutiveDuplicateLinks
+      -
+        # Whether to position the Virtual Cursor on the first line which is
+        # different than the previous page whenever a new page is displayed
+        name: filter.repeated-text
+        type: boolean
+        default: true
+        handler:
+          type: com.microsoft.windows.ini
+          filename: *DEFAULT
+          section: HTML
+          key: SkipPastRepeatedText
+      -
+        # Which attributes to prefer when describing form fields
+        #
+        # 0 - favor label tag
+        # 1 - favor title attribute
+        # 2 - favor alt attribute
+        # 3 - favor longest
+        # 4 - use both label and title if different
+        # 5 - use both label and alt if different
+        name: forms.field-prompt
+        type: integer
+        default: 0
+        handler:
+          type: com.microsoft.windows.ini
+          filename: *DEFAULT
+          section: HTML
+          key: FormFieldPromptOptions
+      -
+        # Whether or not Forms Mode should be automatically turned off when the current page is updated
+        name: forms.auto-off
+        type: boolean
+        default: true
+        handler:
+          type: com.microsoft.windows.ini
+          filename: *DEFAULT
+          section: HTML
+          key: FormsModeAutoOff
+      -
+        # Whether/when to include graphics in web pages
+        #
+        # 0 - Never include graphics
+        # 1 - Only include labeled graphics
+        # 2 - Include all graphics
+        name: graphics.mode
+        type: integer
+        default: 0
+        handler:
+          type: com.microsoft.windows.ini
+          filename: *DEFAULT
+          section: HTML
+          key: IncludeGraphics
+      -
+        # What to announce when a graphical link contains no title or alt text
+        # for its enclosing image and the enclosing anchor has no title
+        #
+        # 0 - Read the img src
+        # 1 - Read enclosing a href
+        name: graphics.link-last-resort
+        type: integer
+        default: 0
+        handler:
+          type: com.microsoft.windows.ini
+          filename: *DEFAULT
+          section: HTML
+          key: GraphicalLinkLastResort
+      -
+        # Whether to distinguish the various types of links
+        # e.g. "FTP link", "mailto link" versus simply announcing "link"
+        # for all types of links
+        name: links.identify-type
+        type: boolean
+        default: true
+        handler:
+          type: com.microsoft.windows.ini
+          filename: *DEFAULT
+          section: HTML
+          key: IdentifyLinkType
+      -
+        # Whether to identify links that point to other places on the
+        # current page by saying "same page link"
+        name: links.identify-same-page
+        type: boolean
+        default: true
+        handler:
+          type: com.microsoft.windows.ini
+          filename: *DEFAULT
+          section: HTML
+          key: IdentifySamePageLinks
+      -
+        # Whether to ignore inline frames, such as those used for advertising
+        name: frames.ignore-inline
+        type: boolean
+        default: false
+        handler:
+          type: com.microsoft.windows.ini
+          filename: *DEFAULT
+          section: HTML
+          key: IgnoreInlineFrames
+      -
+        # Whether to announce column spans when reading table data in web pages
+        name: tables.indicate-colspan
+        type: boolean
+        default: true
+        handler:
+          type: com.microsoft.windows.ini
+          filename: *DEFAULT
+          section: HTML
+          key: IndicateColSpan
+      -
+        # Whether to announce all tables, or only data tables
+        #
+        # 0 - Indicate all tables
+        # 1 - Only indicate data tables
+        name: tables.mode
+        type: integer
+        default: 1
+        handler:
+          type: com.microsoft.windows.ini
+          filename: *DEFAULT
+          section: HTML
+          key: TableDetection
+      -
+        # A cell is considered a valid data cell if it contains upto this number of characters
+        name: tables.data.max-cell-text
+        type: integer
+        default: 250
+        handler:
+          type: com.microsoft.windows.ini
+          filename: *DEFAULT
+          section: HTML
+          key: TblMaxCellTextLength
+      -
+        # A cell is considered a valid data cell if it contains at least this number of characters
+        name: tables.data.min-cell-text
+        type: integer
+        default: 1
+        handler:
+          type: com.microsoft.windows.ini
+          filename: *DEFAULT
+          section: HTML
+          key: TblMinCellTextLength
+      -
+        # This option specifies the minimum number of columns which must contain
+        # text in order for the table to be considered a data table
+        name: tables.data.min-text-columns
+        type: integer
+        default: 2
+        handler:
+          type: com.microsoft.windows.ini
+          filename: *DEFAULT
+          section: HTML
+          key: TblMinTextColumns
+      -
+        # This option specifies the minimum number of rows which must contain
+        # text in order for the table to be considered a data table
+        name: tables.data.min-text-rows
+        type: integer
+        default: 2
+        handler:
+          type: com.microsoft.windows.ini
+          filename: *DEFAULT
+          section: HTML
+          key: TblMinTextRows
+      -
+        # This option specifies the minimum number of valid data rows that a
+        # table must contain in order for it to be considered a data table
+        name: tables.data.min-valid-rows
+        type: integer
+        default: 2
+        handler:
+          type: com.microsoft.windows.ini
+          filename: *DEFAULT
+          section: HTML
+          key: TblMinValidDataRows
+      -
+        # This option specifies the minimum number of cells that a row must
+        # contain in order for it to be considered a valid data row
+        name: tables.data.min-valid-row-cells
+        type: integer
+        default: 2
+        handler:
+          type: com.microsoft.windows.ini
+          filename: *DEFAULT
+          section: HTML
+          key: TblValidRowThreshold
+      -
+        # Whether to announce any HTML attributes defined in the "HTML Attributes Behavior" map of the current scheme
+        name: indicate-attributes
+        type: boolean
+        default: true
+        handler:
+          type: com.microsoft.windows.ini
+          filename: *DEFAULT
+          section: HTML
+          key: IndicateElementAttributes
+      -
+        # Whether to announce lists with the item count and nesting level
+        name: lists.indicate
+        type: boolean
+        default: true
+        handler:
+          type: com.microsoft.windows.ini
+          filename: *DEFAULT
+          section: HTML
+          key: ListIndication
+      -
+        # The maximum number of characters which can appear on a line of a paragraph
+        name: max-line-length
+        type: integer
+        default: 150
+        handler:
+          type: com.microsoft.windows.ini
+          filename: *DEFAULT
+          section: HTML
+          key: MaxLineLength
+      -
+        # How often, in milliseconds, to allow all refreshes.
+        # 
+        # Set to 0 to allow all refreshes without any delay.
+        name: minimum-page-refresh-time
+        type: integer
+        default: 0
+        handler:
+          type: com.microsoft.windows.ini
+          filename: *DEFAULT
+          section: HTML
+          key: PageRefreshFilter
+      -
+        # Whether to automatically read web pages when they're first loaded
+        name: read-on-load
+        type: boolean
+        default: true
+        handler:
+          type: com.microsoft.windows.ini
+          filename: *DEFAULT
+          section: HTML
+          key: SayAllOnDocumentLoad
+      -
+        # Whether to enable "smart navigation" when reading web pages
+        name: smart-navigation
+        type: boolean
+        default: false
+        handler:
+          type: com.microsoft.windows.ini
+          filename: *DEFAULT
+          section: HTML
+          key: SmartNavigation
+      -
+        # The number of consecutive characters that must appear in a web page for
+        # JAWS to treat this as a block of text
+        name: textblock.length
+        type: integer
+        default: 25
+        handler:
+          type: com.microsoft.windows.ini
+          filename: *DEFAULT
+          section: HTML
+          key: TextBlockLength
+      -
+        # Whether or not to use legacy IE support instead of the default FS Dom Server support
+        name: use-legacy-ie
+        type: boolean
+        default: true
+        handler:
+          type: com.microsoft.windows.ini
+          filename: *DEFAULT
+          section: HTML
+          key: UseLegacyIESupport
+      -
+        # Whether or not to allow navigation keystrokes such as tab and shift
+        # tab to wrap to the top or bottom of the document
+        name: wrap-key-navigation
+        type: boolean
+        default: true
+        handler:
+          type: com.microsoft.windows.ini
+          filename: *DEFAULT
+          section: HTML
+          key: WrapNavigation
+
