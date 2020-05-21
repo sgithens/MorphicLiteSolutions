@@ -182,6 +182,7 @@ the properties below:
 ### RegistryType: string
 
 * `string` - String
+* `expandString` - String that expands environmental variables when reading
 * `dword` - 32 bit integer
 * `qword` - 64 bit ingeger
 

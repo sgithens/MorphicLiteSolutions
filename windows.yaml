@@ -35,11 +35,13 @@ solutions:
         # corresponds to a resolution of 960x540
         name: zoom
         type: double
+        default: 1.0
         handler:
           type: org.raisingthefloor.morphic.client
       -
         name: contrast.enabled
         type: boolean
+        default: false
         handler:
           type: com.microsoft.windows.system
           setting_id: SystemSettings_Accessibility_CoreHighContrast_IsEnabled
@@ -49,24 +51,24 @@ solutions:
       -
         name: arrow
         type: string
-        default: $(SystemRoot)\cursors\arrow_i.cur
+        default: %SystemRoot%\cursors\aero_arrow.cur
         handler:
           type: com.microsoft.windows.registry
           key_name: HKEY_CURRENT_USER\Control Panel\Cursors
           value_name: Arrow
-          value_type: string
+          value_type: expandString
         finalizer:
           type: com.microsoft.windows.systemParametersInfo
           action: setcursors
       -
         name: wait
         type: string
-        default: $(SystemRoot)\cursors\busy_i.cur
+        default: %SystemRoot%\cursors\aero_busy.ani
         handler:
           type: com.microsoft.windows.registry
           key_name: HKEY_CURRENT_USER\Control Panel\Cursors
           value_name: Wait
-          value_type: string
+          value_type: expandString
         finalizer:
           type: com.microsoft.windows.systemParametersInfo
           action: setcursors
@@ -78,6 +80,7 @@ solutions:
         # Turns the magnifier on or off
         name: enabled
         type: boolean
+        default: false
         handler:
           type: com.microsoft.windows.system
           setting_id: SystemSettings_Accessibility_Magnifier_IsEnabled
@@ -88,6 +91,7 @@ solutions:
         # 3 = Lens
         name: mode
         type: integer
+        default: 2
         handler:
           type: com.microsoft.windows.registry
           key_name: HKEY_CURRENT_USER\Software\Microsoft\ScreenMagnifier
@@ -97,6 +101,7 @@ solutions:
         # The magnification level of the magnifier
         name: magnification
         type: integer
+        default: 200
         handler:
           type: com.microsoft.windows.registry
           key_name: HKEY_CURRENT_USER\Software\Microsoft\ScreenMagnifier
@@ -106,6 +111,7 @@ solutions:
         # The magnification step size
         name: increment
         type: integer
+        default: 100
         handler:
           type: com.microsoft.windows.registry
           key_name: HKEY_CURRENT_USER\Software\Microsoft\ScreenMagnifier
@@ -115,6 +121,7 @@ solutions:
         # Smooth edges of text and images
         name: smoothing
         type: boolean
+        default: true
         handler:
           type: com.microsoft.windows.registry
           key_name: HKEY_CURRENT_USER\Software\Microsoft\ScreenMagnifier
@@ -124,6 +131,7 @@ solutions:
         # The height of the lens
         name: lens.height
         type: integer
+        default: 10
         handler:
           type: com.microsoft.windows.registry
           key_name: HKEY_CURRENT_USER\Software\Microsoft\ScreenMagnifier
@@ -133,6 +141,7 @@ solutions:
         # The width of the lens
         name: lens.width
         type: integer
+        default: 10
         handler:
           type: com.microsoft.windows.registry
           key_name: HKEY_CURRENT_USER\Software\Microsoft\ScreenMagnifier
@@ -142,6 +151,7 @@ solutions:
         # Indicates that the magnifier should follow the mouse
         name: follow.mouse
         type: boolean
+        default: true
         handler:
           type: com.microsoft.windows.registry
           key_name: HKEY_CURRENT_USER\Software\Microsoft\ScreenMagnifier
@@ -151,6 +161,7 @@ solutions:
         # Indicates that the magnifier should follow the keyboard focus
         name: follow.focus
         type: boolean
+        default: true
         handler:
           type: com.microsoft.windows.registry
           key_name: HKEY_CURRENT_USER\Software\Microsoft\ScreenMagnifier
@@ -160,6 +171,7 @@ solutions:
         # Indicates that the magnifier should follow the text input location
         name: follow.caret
         type: boolean
+        default: true
         handler:
           type: com.microsoft.windows.registry
           key_name: HKEY_CURRENT_USER\Software\Microsoft\ScreenMagnifier
@@ -169,6 +181,7 @@ solutions:
         # Indicates that the magnifier should follow the screen narrator
         name: follow.narrator
         type: boolean
+        default: true
         handler:
           type: com.microsoft.windows.registry
           key_name: HKEY_CURRENT_USER\Software\Microsoft\ScreenMagnifier
@@ -179,6 +192,7 @@ solutions:
         # magnifying glass UI
         name: invert
         type: boolean
+        default: false
         handler:
           type: com.microsoft.windows.registry
           key_name: HKEY_CURRENT_USER\Software\Microsoft\ScreenMagnifier
@@ -189,6 +203,7 @@ solutions:
         # magnifying glass
         name: fade
         type: boolean
+        default: false
         handler:
           type: com.microsoft.windows.registry
           key_name: HKEY_CURRENT_USER\Software\Microsoft\ScreenMagnifier
@@ -200,6 +215,7 @@ solutions:
       -
         name: enabled
         type: boolean
+        default: false
         handler:
           type: com.microsoft.windows.system
           setting_id: SystemSettings_Accessibility_Narrator_IsEnabled
@@ -210,6 +226,7 @@ solutions:
       -
         name: braille.cursor.all.dots
         type: boolean
+        default: false
         handler:
           type: com.microsoft.windows.ini
           filename: $(APPDATA)\Freedom Scientific\JAWS\2019\Settings\enu\DEFAULT.JCF
