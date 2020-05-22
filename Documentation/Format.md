@@ -222,7 +222,7 @@ how to find the function for each setting.
         <tr>
             <th><code>integer_map</code></th>
             <td><code>string[]</code></td>
-            <td>A mapping of integer value to strings, required when the setting `type` is `integer` and the handler `value_tupe` is `string`</td>
+            <td>A mapping of integer value to strings, required when the setting <code>type</code> is <code>integer</code> and the handler <code>value_tupe</code> is <code>string</code></td>
             <td>Optional</td>
         </tr>
     </tbody>
@@ -233,7 +233,7 @@ how to find the function for each setting.
 * `string`
 * `boolean`
 * `integer`
-* `idPrefixedEnum` - A string value that int the "$(setting_id)$(intvalue)" format
+* `idPrefixedEnum` - A string value that in the `"$(setting_id)$(intvalue)"` format
 
 Windows INI File Handler
 -----
