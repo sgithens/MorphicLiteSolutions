@@ -213,8 +213,27 @@ how to find the function for each setting.
             <td>The subkey under HLM\SW\MS\SystemSettings\SettingId</td>
             <td>Required</td>
         </tr>
+        <tr>
+            <th><code>value_type</code></th>
+            <td><code>SystemType</code></td>
+            <td>The type of value expected by the system</td>
+            <td>Required</td>
+        </tr>
+        <tr>
+            <th><code>integer_map</code></th>
+            <td><code>string[]</code></td>
+            <td>A mapping of integer value to strings, required when the setting `type` is `integer` and the handler `value_tupe` is `string`</td>
+            <td>Optional</td>
+        </tr>
     </tbody>
 </table>
+
+### SystemType: string
+
+* `string`
+* `boolean`
+* `integer`
+* `idPrefixedEnum` - A string value that int the "$(setting_id)$(intvalue)" format
 
 Windows INI File Handler
 -----

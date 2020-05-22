@@ -47,12 +47,147 @@ function addInfoToClientHandlers(solutions){
     }
 }
 
+function verifySolutions(solutions){
+    var ids = new Set();
+    for (var i = 0, l = solutions.length; i < l; ++i){
+        var solution = solutions[i];
+        if (!solution.id){
+            throw new Error("Missing solution id for solution index " + i);
+        }
+        if (ids.has(solution.id)){
+            throw new Error("Duplicate solution id " + solution.id);
+        }
+        ids.add(solution.id);
+        verifySolution(solution);
+    }
+}
+
+function verifySolution(solution){
+    if (!solution.settings){
+        throw new Error("Missing settings for solution " + solution.id);
+    }
+    var names = new Set();
+    for (var i = 0, l = solution.settings.length; i < l; ++i){
+        var setting = solution.settings[i];
+        if (!setting.name){
+            throw new Error("Missing setting name for " + solution.id + " setting index " + i);
+        }
+        if (names.has(setting.name)){
+            throw new Error("Duplicate setting name " + solution.id + "." + setting.name);
+        }
+        names.add(setting.name);
+        verifySetting(solution, setting);
+    }
+}
+
+function verifySetting(solution, setting){
+    var key = solution.id + "." + setting.name;
+    if (!allowedSettingTypes.has(setting.type)){
+        throw new Error("Invalid type (" + setting.type + ") for " + key);
+    }
+    if (setting.default === undefined){
+        throw new Error("Missing default for " + key);
+    }
+    if (!setting.handler){
+        throw new Error("Missing setting handler for " + key);
+    }
+    verifyHandler(solution, setting, setting.handler);
+}
+
+var allowedSettingTypes = new Set([
+    "string",
+    "integer",
+    "double",
+    "boolean"
+]);
+
+function verifyHandler(solution, setting, handler){
+    var key = solution.id + "." + setting.name;
+    var verifier = handlerVerifiers[handler.type];
+    if (!verifier){
+        throw new Error("Invalid handler type (" + handler.type + ") for " + key);
+    }
+    verifier(solution, setting, handler);
+}
+
+var handlerVerifiers = {
+    "org.raisingthefloor.morphic.client": function(solution, setting, handler){
+    },
+    "com.microsoft.windows.registry": function(solution, setting, handler){
+        var key = solution.id + "." + setting.name;
+        if (!handler.key_name){
+            throw new Error("Missing registry key name for " + key);
+        }
+        if (!handler.value_name){
+            throw new Error("Missing registry value name for " + key);
+        }
+        if (!handler.value_type){
+            throw new Error("Missing registry value type for " + key);
+        }
+        var allowedSettingTypes = registryValueTypeMap[handler.value_type];
+        if (allowedSettingTypes === undefined){
+            throw new Error("Invalid registry value type (" + handler.value_type + ") for " + key);
+        }
+        if (!allowedSettingTypes.has(setting.type)){
+            throw new Error("Incompatible setting and registry types for " + key);
+        }
+    },
+    "com.microsoft.windows.system": function(solution, setting, handler){
+        var key = solution.id + "." + setting.name;
+        if (!handler.setting_id){
+            throw new Error("Missing system setting id for " + key);
+        }
+        if (!handler.value_type){
+            throw new Error("Missing system setting value type for " + key);
+        }
+        var allowedSettingTypes = systemValueTypeMap[handler.value_type];
+        if (allowedSettingTypes === undefined){
+            throw new Error("Invalid system setting value type (" + handler.value_type + ") for " + key);
+        }
+        if (!allowedSettingTypes.has(setting.type)){
+            throw new Error("Incompatible setting and system types for " + key);
+        }
+        if (setting.type == "integer" && handler.value_type == "string"){
+            if (!handler.integer_map){
+                throw new Error("Integer map is required for " + key);
+            }
+        }
+    },
+    "com.microsoft.windows.ini": function(solution, setting, handler){
+        var key = solution.id + "." + setting.name;
+        if (!handler.filename){
+            throw new Error("Missing ini filename name for " + key);
+        }
+        if (!handler.section){
+            throw new Error("Missing ini section for " + key);
+        }
+        if (!handler.key){
+            throw new Error("Missing ini key name for " + key);
+        }
+    }
+};
+
+var registryValueTypeMap = {
+    "string": new Set(["string"]),
+    "expandString": new Set(["string"]),
+    "dword": new Set(["integer", "boolean"]),
+    "qword": new Set(["integer"])
+};
+
+var systemValueTypeMap = {
+    "string": new Set(["string", "integer"]),
+    "boolean": new Set(["boolean"]),
+    "integer": new Set(["integer"]),
+    "idPrefixedEnum": new Set(["integer"])
+};
+
 fs.readFile(input, 'utf-8', function(err, contents){
     if (err){
         console.error(err);
         return;
     }
     var root = yaml.parse(contents);
+    verifySolutions(root.solutions);
     addInfoToClientHandlers(root.solutions);
     process.stdout.write(JSON.stringify(root.solutions, null, 2));
     process.stdout.write("\n");

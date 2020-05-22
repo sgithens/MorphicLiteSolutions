@@ -163,7 +163,7 @@ solutions:
         # 2 - Advanced
         name: flash.verbosity
         type: integer
-        # FIXME: missing default
+        default: 0
         handler:
           type: com.microsoft.windows.ini
           filename: *DEFAULT
