@@ -233,7 +233,7 @@ how to find the function for each setting.
 * `string`
 * `boolean`
 * `integer`
-* `idPrefixedEnum` - A string value that in the `"$(setting_id)$(intvalue)"` format
+* `idPrefixedEnum` - A string value in the `"$(setting_id)$(intvalue)"` format
 
 Windows INI File Handler
 -----
