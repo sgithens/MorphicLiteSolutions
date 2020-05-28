@@ -1,4 +1,4 @@
-The solutions registry is written and maintained in [YAML](https://yaml.org).
+The solutions registry is written and maintained in [YAML](https://yaml.org) with the expectation that it will be human-edited.
 
 The YAML source can be translated into JSON for packaging with clients.
 
@@ -323,3 +323,29 @@ on windows, which can be used to refresh certain services.
 ### SystemParameterAction: string
 
 * `setcursors` - Refresh the system cursors
+
+References
+==========
+
+YAML references can be used as variables for repeated values like filenames.  References can be declared anywhere, including 
+under arbitrary top-level keys.
+
+````
+files:
+  - &CONFIG1 $(APPDATA)\Path\To\Config.ini
+
+solutions:
+  -
+    identifier: com.example.solution
+    settings:
+      -
+        name: setting1
+        type: string
+        default: test
+        handler:
+          type: com.microsoft.windows.ini
+          filename: *CONFIG1
+          section: main
+          key: setting1
+
+````
