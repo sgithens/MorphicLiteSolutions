@@ -39,6 +39,7 @@ solutions:
         handler:
           type: org.raisingthefloor.morphic.client
       -
+        # High contrast enabled
         name: contrast.enabled
         type: boolean
         default: false
@@ -46,33 +47,69 @@ solutions:
           type: com.microsoft.windows.system
           setting_id: SystemSettings_Accessibility_CoreHighContrast_IsEnabled
           value_type: boolean
-  -
-    id: com.microsoft.windows.cursor
-    settings:
       -
-        name: arrow
-        type: string
-        default: %SystemRoot%\cursors\aero_arrow.cur
+        # Color filters enabled
+        #
+        # Color filters can make the display grayscale, inverted, or tinted
+        name: colorfilter.enabled
+        type: boolean
+        default: false
         handler:
-          type: com.microsoft.windows.registry
-          key_name: HKEY_CURRENT_USER\Control Panel\Cursors
-          value_name: Arrow
-          value_type: expandString
-        finalizer:
-          type: com.microsoft.windows.systemParametersInfo
-          action: setcursors
+          type: com.microsoft.windows.system
+          setting_id: SystemSettings_Accessibility_ColorFiltering_IsEnabled
+          value_type: boolean
       -
-        name: wait
-        type: string
-        default: %SystemRoot%\cursors\aero_busy.ani
+        # Whether the color filters keyboard shortcut is enabled
+        name: colorfilter.shortcut.enabled
+        type: boolean
+        default: false
         handler:
-          type: com.microsoft.windows.registry
-          key_name: HKEY_CURRENT_USER\Control Panel\Cursors
-          value_name: Wait
-          value_type: expandString
-        finalizer:
-          type: com.microsoft.windows.systemParametersInfo
-          action: setcursors
+          type: com.microsoft.windows.system
+          setting_id: SystemSettings_Accessibility_ColorFiltering_IsShortcutKeyEnabled
+          value_type: boolean
+      -
+        # The type of color filter to apply when enabled
+        # 0 - Grayscale
+        # 1 - Inverted
+        # 2 - Grayscale inverted
+        # 3 - Red-green (green weak, deuteranopia)
+        # 4 - Red-green (red weak, protanopia)
+        # 5 - Blue-yellow (tritanopia)
+        name: colorfilter.type
+        type: integer
+        default: 1
+        handler:
+          type: com.microsoft.windows.system
+          setting_id: SystemSettings_Accessibility_ColorFiltering_FilterType
+          value_type: integer
+  # Cursors were only partially implemented to test finalizer functionality
+  # -
+  #   id: com.microsoft.windows.cursor
+  #   settings:
+  #     -
+  #       name: arrow
+  #       type: string
+  #       default: %SystemRoot%\cursors\aero_arrow.cur
+  #       handler:
+  #         type: com.microsoft.windows.registry
+  #         key_name: HKEY_CURRENT_USER\Control Panel\Cursors
+  #         value_name: Arrow
+  #         value_type: expandString
+  #       finalizer:
+  #         type: com.microsoft.windows.systemParametersInfo
+  #         action: setcursors
+  #     -
+  #       name: wait
+  #       type: string
+  #       default: %SystemRoot%\cursors\aero_busy.ani
+  #       handler:
+  #         type: com.microsoft.windows.registry
+  #         key_name: HKEY_CURRENT_USER\Control Panel\Cursors
+  #         value_name: Wait
+  #         value_type: expandString
+  #       finalizer:
+  #         type: com.microsoft.windows.systemParametersInfo
+  #         action: setcursors
   -
     # Settings related to Microsoft Windows Magnfier
     id: com.microsoft.windows.magnifier
