@@ -107,6 +107,7 @@ Type : string
 * `integer`
 * `double`
 * `boolean`
+* `files`
 
 Handlers
 =======
@@ -137,6 +138,8 @@ any extra information.
         </tr>
     </tbody>
 </table>
+
+Each specific client handler defines the value types it reads and writes.
 
 Windows Registry Handler
 -----
@@ -185,6 +188,14 @@ the properties below:
 * `expandString` - String that expands environmental variables when reading
 * `dword` - 32 bit integer
 * `qword` - 64 bit ingeger
+
+### Compatible Types
+
+A registry handler is compatible with the following setting types:
+
+* `string` -> registry type `string` or `expandString`
+* `boolean` -> registry type `dword`
+* `integer` -> registry type `dword` or `qword`
 
 Windows System Setting Handler
 -----
@@ -235,6 +246,14 @@ how to find the function for each setting.
 * `integer`
 * `idPrefixedEnum` - A string value in the `"$(setting_id)$(intvalue)"` format
 
+### Compatible Types
+
+A system setting handler is compatible with the following setting types:
+
+* `string` -> system type `string`
+* `boolean` -> system type `boolean`
+* `integer` -> system type `integer` or `string` or `idPrefixedEnum`
+
 Windows INI File Handler
 -----
 
@@ -283,6 +302,86 @@ the `$(VARNAME)` syntax.
 The following variables are supported:
 
 * `APPDATA` - The user's application data root folder
+
+### Compatible Types
+
+A ini setting handler is compatible with the following setting types:
+
+* `string` -> ini string
+* `boolean` -> ini string `"0"` or `"1"`
+* `integer` -> ini string representation (e.g., `"42"`)
+* `double` -> ini string representation (e.g, `"4.2"`)
+
+
+Files Handler
+-----
+
+Files handlers can be used to capture and apply the full configuration files used by 
+a solution.
+
+<table>
+    <thead>
+        <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th colspan="2">Description</th>
+        </tr>
+    <tbody>
+        <tr>
+            <th><code>type</code></th>
+            <td><code>string</code></td>
+            <td><code>"com.microsoft.windows.files"</code></td>
+            <td>Required</td>
+        </tr>
+        <tr>
+            <th><code>root</code></th>
+            <td><code>string</code></td>
+            <td>A common absolute root path for the <code>files</code></td>
+            <td>Required</td>
+        </tr>
+        <tr>
+            <th><code>files</code></th>
+            <td><code>string[]</code></td>
+            <td>The files to collect</td>
+            <td>Required</td>
+        </tr>
+    </tbody>
+</table>
+
+### Filename Environmental Variables
+
+Environmental variables can be used in the `root` of a files handler using
+the `$(VARNAME)` syntax.
+
+The following variables are supported:
+
+* `APPDATA` - The user's application data root folder
+
+
+### File Wildcards
+
+An entry in the `files` array may contain a leading or a trailing wildcard in the
+final path component.
+
+````
+solutions:
+  -
+    # ...
+    settings:
+      -
+        # ...
+        handler:
+          type: com.microsoft.windows.files
+          root: $(APPDATA)\MyApp
+          files:
+            - config/*.ini
+            - extra/pref*
+            - more/*
+````
+
+### Compatible Types
+
+A files setting handle supports only the `files` setting type.
 
 
 Finalizers

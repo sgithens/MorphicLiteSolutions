@@ -98,7 +98,8 @@ var allowedSettingTypes = new Set([
     "string",
     "integer",
     "double",
-    "boolean"
+    "boolean",
+    "files"
 ]);
 
 function verifyHandler(solution, setting, handler){
@@ -163,6 +164,18 @@ var handlerVerifiers = {
         }
         if (!handler.key){
             throw new Error("Missing ini key name for " + key);
+        }
+    },
+    "com.microsoft.windows.files": function(solution, setting, handler){
+        var key = solution.id + "." + setting.name;
+        if (!handler.root){
+            throw new Error("Missing root folder for " + key);
+        }
+        if (!handler.files){
+            throw new Error("Missing files list for " + key);
+        }
+        if (setting.type != "files"){
+            throw new Error("Files handler can only be used on settings of type 'files', at " + key);
         }
     }
 };
