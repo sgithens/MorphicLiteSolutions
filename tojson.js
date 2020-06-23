@@ -92,6 +92,9 @@ function verifySetting(solution, setting){
         throw new Error("Missing setting handler for " + key);
     }
     verifyHandler(solution, setting, setting.handler);
+    if (setting.finalizer){
+        verifyFinalizer(solution, setting, setting.finalizer);
+    }
 }
 
 var allowedSettingTypes = new Set([
@@ -177,6 +180,53 @@ var handlerVerifiers = {
         if (setting.type != "files"){
             throw new Error("Files handler can only be used on settings of type 'files', at " + key);
         }
+    },
+    "com.microsoft.windows.process": function(solution, setting, handler){
+        var key = solution.id + "." + setting.name;
+        if (!handler.exe){
+            throw new Error("Missing exe name for " + key);
+        }
+        if (!handler.state){
+            throw new Error("Missing process state name for " + key);
+        }
+        if (handler.state != "running" && handler.state != "installed"){
+            throw new Error("Process state must be one of (running, installed) for " + key);
+        }
+        if (setting.type != "boolean"){
+            throw new Error("Process handler can only be used for boolean settings, at " + key);
+        }
+    }
+};
+
+function verifyFinalizer(solution, setting, finalizer){
+    var key = solution.id + "." + setting.name;
+    var verifier = finalizerVerifiers[finalizer.type];
+    if (!verifier){
+        throw new Error("Invalid finalizer type (" + finalizer.type + ") for " + key);
+    }
+    verifier(solution, setting, finalizer);
+}
+
+var finalizerVerifiers = {
+    "com.microsoft.windows.spi": function(solution, setting, finalizer){
+        if (!finalizer.action){
+            throw new Error("Missing finalizer action for " + key);
+        }
+        if (!spiActions.has(finalizer.action)){
+            throw new Error("Invalid finalizer action for " + key);
+        }
+    },
+    "com.microsoft.windows.process": function(solution, setting, finalizer){
+        var key = solution.id + "." + setting.name;
+        if (!finalizer.exe){
+            throw new Error("Missing finalizer exe name for " + key);
+        }
+        if (!finalizer.action){
+            throw new Error("Missing finalizer process action name for " + key);
+        }
+        if (finalizer.action != "start" && finalizer.action != "stop" && finalizer.action != "restart"){
+            throw new Error("Finalizer process action must be one of (start, stop, restart) for " + key);
+        }
     }
 };
 
@@ -193,6 +243,8 @@ var systemValueTypeMap = {
     "integer": new Set(["integer"]),
     "idPrefixedEnum": new Set(["integer"])
 };
+
+var spiActions = new Set(["setcursors"])
 
 fs.readFile(input, 'utf-8', function(err, contents){
     if (err){

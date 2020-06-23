@@ -97,6 +97,12 @@ Each setting representns a specific option that affects how a solution behaves.
             <td>Extra operation that needs to run so the changed setting is seen</td>
             <td>Optional</td>
         </tr>
+        <tr>
+            <th><code>dependencies</code></th>
+            <th><code>string[]</code></th>
+            <td>A list of setting names that must be applied before this one</td>
+            <td>Optional</td>
+        </tr>
     </tbody>
 </table>
 
@@ -108,6 +114,12 @@ Type : string
 * `double`
 * `boolean`
 * `files`
+
+Dependencies
+-----
+
+The names in the dependency list can be either other setting names from the
+same solution or fully qualified names in the form `<solution.id>.<setting.name>`.
 
 Handlers
 =======
@@ -384,6 +396,50 @@ solutions:
 A files setting handle supports only the `files` setting type.
 
 
+Process Handler
+-----
+
+Process handlers can be used to capture a `boolean` of whether a given
+process is running or installed
+
+<table>
+    <thead>
+        <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th colspan="2">Description</th>
+        </tr>
+    <tbody>
+        <tr>
+            <th><code>type</code></th>
+            <td><code>string</code></td>
+            <td><code>"com.microsoft.windows.process"</code></td>
+            <td>Required</td>
+        </tr>
+        <tr>
+            <th><code>exe</code></th>
+            <td><code>string</code></td>
+            <td>The executable name, often a registry subkey within <code>HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths</code></td>
+            <td>Required</td>
+        </tr>
+        <tr>
+            <th><code>state</code></th>
+            <td><code>ProcessState</code></td>
+            <td>Which state of the process should be captured/applied</td>
+            <td>Required</td>
+        </tr>
+    </tbody>
+</table>
+
+### Compatible Types
+
+A process running setting handle supports only the `boolean` setting type.
+
+### ProcessState: string
+
+* `running` - Whether the process is running
+* `installed` - Whether the process is installed (currently capture only)
+
 Finalizers
 =======
 
@@ -422,6 +478,48 @@ on windows, which can be used to refresh certain services.
 ### SystemParameterAction: string
 
 * `setcursors` - Refresh the system cursors
+
+
+Process Finalizer
+-----
+
+A Process finalizer can trigger a process start, stop, or restart.
+
+<table>
+    <thead>
+        <tr>
+            <th>Property</th>
+            <th>Type</th>
+            <th colspan="2">Description</th>
+        </tr>
+    <tbody>
+        <tr>
+            <th><code>type</code></th>
+            <td><code>string</code></td>
+            <td><code>"com.microsoft.windows.process"</code></td>
+            <td>Required</td>
+        </tr>
+        <tr>
+            <th><code>exe</code></th>
+            <td><code>string</code></td>
+            <td>The executable name, often a registry subkey within <code>HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths</code></td>
+            <td>Required</td>
+        </tr>
+        <tr>
+            <th><code>action</code></th>
+            <td><code>ProcessAction</code></td>
+            <td>The process action to perform</td>
+            <td>Required</td>
+        </tr>
+    </tbody>
+</table>
+
+
+### ProcessAction: string
+
+* `start` - Starts the process (if not running)
+* `stop` - Stops the process (if running)
+* `restart` - Stops then starts the process (if running; does nothing if process is not running)
 
 References
 ==========

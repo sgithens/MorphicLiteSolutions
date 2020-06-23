@@ -26,6 +26,14 @@ solutions:
     id: com.freedomscientific.jaws2020
     settings:
       -
+        name: running
+        type: boolean
+        default: false
+        handler:
+          type: com.microsoft.windows.process
+          exe: JAWS2020.exe
+          state: running
+      -
         name: configuration
         type: files
         default: null
@@ -35,3 +43,7 @@ solutions:
           files:
             - enu\*.JCF
             - VoiceProfiles\*.VPF
+        finalizer:
+          type: com.microsoft.windows.process
+          exe: JAWS2020.exe
+          action: restart
