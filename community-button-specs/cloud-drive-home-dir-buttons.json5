@@ -1,69 +1,94 @@
 {
-    extraWidgets: [
+    items: [
         {
             id: "dropbox-homedir-button",
 
             category: "cloud-drive-home-location",
-            widget: "button",
-            actionType: "web",
-            actionData: "https://www.dropbox.com/h",
 
-            text: "Dropbox Home Folder",
-            icon: "",
+            kind: "button",
+            label: "Dropbox Home Folder",
             popupText: "Opens your Dropbox",
-            description: ""
+            description: "",
+
+            value: {
+                icon: "",
+                action: {
+                    type: "web",
+                    data: "https://www.dropbox.com/h"
+                }
+            }
         },
         {
             id: "googledrive-homedir-button",
 
             category: "cloud-drive-home-location",
-            widget: "button",
-            actionType: "web",
-            actionData: "https://drive.google.com/drive/my-drive",
 
-            text: "Google Drive Home",
-            icon: "",
+            kind: "button",
+            label: "Google Drive Home",
             popupText: "Opens your Google Drive",
-            description: ""
+            description: "",
+
+            value: {
+                icon: "",
+                action: {
+                    type: "web",
+                    data: "https://drive.google.com/drive/my-drive"
+                }
+            }
         },
         {
             id: "icloudfiles-homedir-button",
 
             category: "icloudfiles-home-location",
-            widget: "button",
-            actionType: "web",
-            actionData: "https://www.icloud.com/iclouddrive/",
 
-            text: "iCloud Files Home Folder",
-            icon: "",
+            kind: "button",
+            label: "iCloud Files Home Folder",
             popupText: "Opens your iCloud Files",
-            description: ""
+            description: "",
+
+            value: {
+                icon: "",
+                action: {
+                    type: "web",
+                    data: "https://www.icloud.com/iclouddrive/"
+                }
+            }
         },
         {
             id: "box-homedir-button",
 
             category: "box-home-location",
-            widget: "button",
-            actionType: "web",
-            actionData: "https://www.box.com", // TODO This URL needs to be more specific
 
-            text: "Box Home Folder",
-            icon: "",
+            kind: "button",
+            label: "Box Home Folder",
             popupText: "Opens your Box Home Folder",
-            description: ""
+            description: "",
+
+            value: {
+                icon: "",
+                action: {
+                    type: "web",
+                    data: "https://www.box.com" // TODO This URL needs to be more specific
+                }
+            }
         },
         {
             id: "onedrive-homedir-button",
 
             category: "onedrive-home-location",
-            widget: "button",
-            actionType: "web",
-            actionData: "https://onedrive.live.com/?id=root",
 
-            text: "One Drive Folder",
-            icon: "",
+            kind: "button",
+            label: "One Drive Folder",
             popupText: "Opens your Microsoft One Drive Home Folder",
-            description: ""
+            description: "",
+
+            value: {
+                icon: "",
+                action: {
+                    type: "web",
+                    data: "https://onedrive.live.com/?id=root"
+                }
+            }
         }
     ]
 }
