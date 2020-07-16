@@ -1,56 +1,80 @@
 {
-    extraWidgets: [
+    items: [
         {
             id: "google-photos-button",
 
             category: "photos",
-            widget: "button",
-            actionType: "web",
-            actionData: "https://photos.google.com",
 
             text: "Google Photos",
-            icon: "",
             popupText: "Google Photos",
-            description: ""
+            description: "",
+
+            kind: "button",
+            value: {
+                action: {
+                    type: "web",
+                    data: "https://photos.google.com"
+                },
+                icon: "",
+            }
+
         },
         {
             id: "macos-photos-button",
 
             category: "photos",
-            widget: "button",
-            actionType: "app",
-            actionData: "TODO",
 
             text: "Apple Photos",
-            icon: "",
             popupText: "Opens Apple Photos to a preferred album",
-            description: ""
+            description: "",
+
+            kind: "button",
+            value: {
+                action: {
+                    type: "app",
+                    data: "TODO"
+                },
+                icon: "",
+            }
+
         },
         {
             id: "icloud-photos-button",
 
             category: "photos",
-            widget: "button",
-            actionType: "website",
-            actionData: "TODO",
 
             text: "iCloud Photos",
-            icon: "",
             popupText: "Opens Apple Photos to a preferred album",
-            description: "Similar to the Apple Photos buttons but opens your photos from the iCloud url"
+            description: "Similar to the Apple Photos buttons but opens your photos from the iCloud url",
+
+            kind: "button",
+            value: {
+                action: {
+                    type: "website",
+                    data: "TODO"
+                },
+                icon: "",
+            }
+
         },
         {
             id: "windows-photos-button",
 
             category: "photos",
-            widget: "button",
-            actionType: "app",
-            actionData: "TODO",
 
             text: "Windows Photos",
-            icon: "",
             popupText: "Opens Windows Photos to a preferred album",
-            description: ""
+            description: "",
+
+            kind: "button",
+            value: {
+                action: {
+                    type: "app",
+                    data: "TODO"
+                },
+                icon: "",
+            }
+
         }
     ]
 }

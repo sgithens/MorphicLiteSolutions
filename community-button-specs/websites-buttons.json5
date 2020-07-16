@@ -1,30 +1,42 @@
 {
-    extraWidgets: [
+    items: [
         {
             id: "amazon-website-button",
 
             category: "website",
-            widget: "button",
-            actionType: "web",
-            actionData: "https://www.amazon.com",
 
             text: "Amazon",
-            icon: "",
             popupText: "Amazon Store Front",
-            description: ""
+            description: "",
+
+            kind: "button",
+            value: {
+                icon: "",
+                action: {
+                    type: "web",
+                    data: "https://www.amazon.com"
+                },
+            },
+
         },
         {
             id: "google-website-button",
 
             category: "website",
-            widget: "button",
-            actionType: "web",
-            actionData: "https://www.google.com",
 
             text: "Google Search",
-            icon: "",
             popupText: "Opens your Google Search",
-            description: ""
+            description: "",
+
+            kind: "button",
+            value: {
+                icon: "",
+                action: {
+                    type: "web",
+                    data: "https://www.google.com"
+                },
+            }
+
         }
     ]
 }

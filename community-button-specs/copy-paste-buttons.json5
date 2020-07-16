@@ -1,30 +1,40 @@
 {
-    extraWidgets: [
+    items: [
         {
             id: "copy-clipboard-button",
 
             category: "clipboard",
-            widget: "button",
-            actionType: "func:copy",
-            actionData: "",
 
             text: "Copy",
-            icon: "",
             popupText: "Copy highlighted area to clipboard",
-            description: ""
+            description: "",
+
+            kind: "button",
+            value: {
+                action: {
+                    actionType: "func:copy",
+                    actionData: ""
+                },
+                icon: ""
+            },
         },
         {
             id: "paste-clipboard-button",
 
             category: "clipboard",
-            widget: "button",
-            actionType: "func:paste",
-            actionData: "",
 
             text: "Paste",
-            icon: "",
             popupText: "Paste highlighted area to clipboard",
-            description: ""
+            description: "",
+
+            kind: "button",
+            value: {
+                action: {
+                    actionType: "func:paste",
+                    actionData: ""
+                },
+                icon: ""
+            },
         }
     ]
 }

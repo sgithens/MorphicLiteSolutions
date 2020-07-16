@@ -5,18 +5,20 @@
  *  Here for reference.
  */
 {
+  id: "bar1",
+  name: "Example bar",
   // Colours (and perhaps other visual things)
   theme: {
-    background: "white",
-    // Default widget theme
-    widget: {
-      text: "white",
-      background: "#002957"
-    }
+    text: "back",
+    background: "white"
+  },
+  itemTheme: {
+    text: "white",
+    background: "#002957"
   },
 
   // The items for the bar
-  barWidgets: [
+  items: [
     {
       // email|calendar|videocall|photos|...
       // Probably be ignored by the client
@@ -25,60 +27,63 @@
       // unique identifier (probably ignored by client)
       id: "calendar-button",
 
-      // "button" for buttons, or "toggle" for toggle switches
-      widget: "button",
-
-      // app|shell|web|control-panel|func:name
-      actionType: "web",
-      // command/url, depending on the "type"
-      actionData: "http://calendar.google.com",
-
       // Displayed on the button
-      text: "Calendar",
-      // local/remote url of the icon
-      icon: "calendar.png",
+      label: "Calendar",
+
       // Tooltip
       popupText: "Open the calendar",
-      // More details
-      description: "Displays your google calendar"
 
-      theme: {
-        // per-button theme, overrides the `theme.widget` field from above.
+      // More details. If this is specified, then `popupText` will become a header in the tooltip.
+      description: "Displays your google calendar",
+
+      // per-button theme, overrides the `theme.itemTheme` field from above.
+      theme: {},
+
+      // The kind of item
+      kind: "button",
+
+      // The item data specific to the kind of item
+      value: {
+        icon: "calendar.png",
+        action: {
+          type: "web",
+          data: "https://calendar.example.com"
+        }
       }
-    }, {
+    },
+    {
       // A toggle switch - same as a button, except `actionType` and `actionData` are moved inside `on` and `off`.
       // `on` and `off` behave like buttons.
-      id: "read-write"
-      widget: "toggle",
+      id: "read-write",
       name: "Read Write",
+      kind: "toggle",
+      value: {
+        // Set the preference
+        preference: "gpii.readwrite.enabled",
 
-      // Set the preference
-      preference: "gpii.readwrite.enabled",
+        // If `preference` is undefined, then `state`, `on`, and `off` are used, which behave like buttons.
 
-      // If `preference` is undefined, then `state`, `on`, and `off` are used, which behave like buttons.
-
-      // Detect the current state - will be a built-in function that returns a boolean, or command (exit 0 = 'on')
-      state: {
-        // Perhaps if `on.actionType` is `app`, this isn't required.
-        actionType: "shell",
-        actionData: "Get-Process read-write.exe"
-      },
-      on: {
-        text: "On", // default: "On",
-        // same as a button's `actionType`/`actionData`
-        actionType: "app",
-        actionData: "read-write.exe"
-      },
-      off: {
-        // Same structure as `on`.
+        // Detect the current state - will be a built-in function that returns a boolean, or command (exit 0 = 'on')
+        state: {
+          // Perhaps if `on.actionType` is `app`, this isn't required.
+          action: {
+            type: "shell",
+            data: "Get-Process read-write.exe",
+          }
+        },
+        on: {
+          text: "On",
+          // default: "On",
+          // same as a button's `actionType`/`actionData`
+          action: {
+            type: "app",
+            data: "read-write.exe"
+          }
+        },
+        off: {
+          // Same structure as `on`.
+        }
       }
-    }
-  ],
-
-  // The items for the pull-out
-  extraWidgets: [
-    {
-      // same structure as `barWidgets` above
     }
   ]
 }
